@@ -51,7 +51,7 @@ script:
 
   # Check netstat
   - netstat=$(mktemp)
-  - docker exece "$(cat ${container_id})" env TERM=xterm netstat -tulpn | tee -a ${netstat}
+  - docker exec "$(cat ${container_id})" env TERM=xterm netstat -tulpn | tee -a ${netstat}
   # Check if Port 22 is open
   #- ssh_port=$(mktemp)
   #- docker exec "$(cat ${container_id})" iptables -L -n | tee -a ${ssh_port}
