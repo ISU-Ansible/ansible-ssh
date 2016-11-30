@@ -55,7 +55,7 @@ script:
 
   # Check processes
   - docker=$(mktemp)
-  - docker ps | tee -a ${docker}
+  - docker inspect $(cat ${container_id}) | tee -a ${docker}
 
   # Check if Port 22 is open
   #- ssh_port=$(mktemp)
