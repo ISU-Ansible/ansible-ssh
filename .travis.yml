@@ -9,9 +9,9 @@ env:
   - distro: centos6
     init: /sbin/init
     run_opts: ""
-  - distro: fedora24
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --cap-add=SYS_ADMIN"
+  #- distro: fedora24
+  #  init: /usr/lib/systemd/systemd
+  #  run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --cap-add=SYS_ADMIN"
 
 # Tell Travis to start Docker when it brings up an environment.
 services:
