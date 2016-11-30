@@ -11,4 +11,4 @@
       register: sshd_status
 
     - debug:
-        msg: sshd_status.stdout
+        msg: "{{sshd_status.stdout}}""
