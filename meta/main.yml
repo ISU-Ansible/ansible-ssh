@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Barry Britt
+  description: A highly configurable role for installing and configuring SSH.
+  company: Iowa State University
+  license: GPL
+  min_ansible_version: 2.0
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  galaxy_tags:
+    - ssh
+    - system
