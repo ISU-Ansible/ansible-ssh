@@ -10,5 +10,6 @@
       shell: service sshd status
       register: sshd_status
 
-    - debug:
-        msg: "{{sshd_status.stdout}}"
+    - assert:
+        that:
+         - "sshd_status.stdout.find('running')"
