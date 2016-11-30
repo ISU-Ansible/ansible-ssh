@@ -11,7 +11,7 @@ env:
     run_opts: ""
   - distro: fedora24
     init: /usr/lib/systemd/systemd
-    run_opts: "--security-opt seccomp:unconfined --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --cap-add=SYS_ADMIN  --security-opt=seccomp:unconfined"
 
 # Tell Travis to start Docker when it brings up an environment.
 services:
