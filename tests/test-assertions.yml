@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  roles:
+    - role_under_test
+
+  tasks:
+    - name: "Evaluate SSHD"
+      service:
+        name: sshd
+      register: sshd_status
+
+    - debug:
+        var: sshd_status
+        verbosity: 4
