@@ -11,5 +11,4 @@
       register: sshd_status
 
     - debug:
-        var: sshd_status
-        verbosity: 4
+        msg: sshd_status.stdout
