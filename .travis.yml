@@ -40,5 +40,13 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  # Other tests
+  # Other tests if necessary
   #- 'docker exec --tty "$(cat ${container_id})" env TERM=xterm '
+
+after_failure:
+  # Check what happened on systemd systems.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm systemctl -l status sshd.service'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm journalctl -xe --no-pager'
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
