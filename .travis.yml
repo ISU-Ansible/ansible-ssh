@@ -40,14 +40,23 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Other tests if necessary
-  # Check if Port 22 is open
-  - ssh_port=$(mktemp)
-  - docker exec "$(cat ${container_id})" iptables -L -n | tee -a ${ssh_port}
+  # Check if sshd is started
+  - ssh=$(mktemp)
+  - docker exec "$(cat ${container_id})" env TERM=xterm ps -eaf | tee -a ${ssh}
   - >
-    tail ${ssh_port}
-    | grep -q "ACCEPT.*dpt:22"
-    && (echo 'Port 22 is open - success' && exit 0)
-    || (echo 'Port 22 is closed - failure' && exit 1)
+    tail ${ssh}
+    | grep -q "/usr/sbin/sshd"
+    && (echo 'SSH is started - success' && exit 0)
+    || (echo 'SSH is not started - failure' && exit 1)
+
+  # Check if Port 22 is open
+  #- ssh_port=$(mktemp)
+  #- docker exec "$(cat ${container_id})" iptables -L -n | tee -a ${ssh_port}
+  #- >
+  #  tail ${ssh_port}
+  #  | grep -q "ACCEPT.*dpt:22"
+  #  && (echo 'Port 22 is open - success' && exit 0)
+  #  || (echo 'Port 22 is closed - failure' && exit 1)
 
 after_failure:
   # Check what happened on systemd systems.
