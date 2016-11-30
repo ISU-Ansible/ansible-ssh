@@ -49,13 +49,17 @@ script:
     && (echo 'SSH is started - success' && exit 0)
     || (echo 'SSH is not started - failure' && exit 1)
 
+  # Check SSH connectivity
+  - ssh_connect=$(mktemp)
+  - docker exec "$(cat ${container_id})" env TERM=xterm ssh localhost | tee -a ${ssh}
+  
   # Check netstat
-  - netstat=$(mktemp)
-  - docker exec "$(cat ${container_id})" env TERM=xterm netstat -tulpn | tee -a ${netstat}
+  #- netstat=$(mktemp)
+  #- docker exec "$(cat ${container_id})" env TERM=xterm netstat -tulpn | tee -a ${netstat}
 
   # Check processes
-  - docker=$(mktemp)
-  - docker inspect $(cat ${container_id}) | tee -a ${docker}
+  #- docker=$(mktemp)
+  #- docker inspect $(cat ${container_id}) | tee -a ${docker}
 
   # Check if Port 22 is open
   #- ssh_port=$(mktemp)
