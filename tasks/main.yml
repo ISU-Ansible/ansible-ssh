@@ -1,0 +1,26 @@
+---
+- block:
+
+  - yum:
+      name: "{{ item }}"
+      state: installed
+    with_flattened:
+      - "{{ opensshd_packages }}"
+      - "{{ opensshd_packages_extras }}"
+
+  - service:
+      name: "{{ssh_service_name}}"
+      state: started
+      enabled: yes
+
+  - template:
+      src: sshd_config.j2
+      dest: "{{ opensshd_config_path }}"
+      owner: root
+      group: root
+      mode: 0600
+    notify:
+      - restart sshd
+      - firewalld ssh
+
+  when: opensshd_enabled == true
