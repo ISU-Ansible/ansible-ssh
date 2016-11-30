@@ -6,7 +6,7 @@
     - role_under_test
 
   tasks:
-    - name: "Evaluate SSHD"
+    - name: "Test is SSHD running?"
       shell: service sshd status
       register: sshd_status
 
