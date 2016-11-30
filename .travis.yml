@@ -51,8 +51,8 @@ script:
 
   # Check SSH connectivity
   - ssh_connect=$(mktemp)
-  - docker exec "$(cat ${container_id})" env TERM=xterm ssh localhost | tee -a ${ssh}
-  
+  - docker exec "$(cat ${container_id})" env TERM=xterm /usr/bin/ssh localhost | tee -a ${ssh}
+
   # Check netstat
   #- netstat=$(mktemp)
   #- docker exec "$(cat ${container_id})" env TERM=xterm netstat -tulpn | tee -a ${netstat}
