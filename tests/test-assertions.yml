@@ -14,9 +14,10 @@
       shell: grep "PermitRootLogin" /etc/ssh/sshd_config
       register: sshd_configuration
 
-    - debug:
-        var: sshd_configuration
+#    - debug:
+#        var: sshd_configuration
 
     - assert:
         that:
          - "sshd_status.stdout.find('running')"
+         - "sshd_configuration.stdout.find('without-password')"
