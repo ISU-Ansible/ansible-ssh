@@ -6,9 +6,18 @@
     - role_under_test
 
   tasks:
-    - name: "Test is SSHD running?"
+    - name: "[Test] Is SSHD running?"
       shell: service sshd status
       register: sshd_status
+
+    - name: "[Test] Is the base configuration in place?"
+      find:
+        paths: "/etc/ssh/sshd_config"
+        contains: "PermitRootLogin.*without-password"
+      register: sshd_configuration
+
+    - debug:
+        msg: "{{ sshd_configuration }}"
 
     - assert:
         that:

@@ -41,25 +41,25 @@ script:
 
   # Other tests if necessary
   # Check if sshd is started
-  - ssh=$(mktemp)
-  - docker exec "$(cat ${container_id})" env TERM=xterm ps -eaf | tee -a ${ssh}
-  - >
-    tail ${ssh}
-    | grep -q "/usr/sbin/sshd"
-    && (echo 'SSH is started - success' && exit 0)
-    || (echo 'SSH is not started - failure' && exit 1)
+  # - ssh=$(mktemp)
+  # - docker exec "$(cat ${container_id})" env TERM=xterm ps -eaf | tee -a ${ssh}
+  # - >
+  #   tail ${ssh}
+  #   | grep -q "/usr/sbin/sshd"
+  #   && (echo 'SSH is started - success' && exit 0)
+  #   || (echo 'SSH is not started - failure' && exit 1)
 
   # Test assertions.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test-assertions.yml'
 
   # Check if configuration has been put into place
-  - ssh_config=$(mktemp)
-  - docker exec "$(cat ${container_id})" env TERM=xterm cat /etc/ssh/sshd_config | tee -a ${ssh_config}
-  - >
-    tail ${ssh_config}
-    | grep -q "PermitRootLogin.*without-password"
-    && (echo 'Configuration - success' && exit 0)
-    || (echo 'Configuraiton - not successful' && exit 1)
+  # - ssh_config=$(mktemp)
+  # - docker exec "$(cat ${container_id})" env TERM=xterm cat /etc/ssh/sshd_config | tee -a ${ssh_config}
+  # - >
+  #   tail ${ssh_config}
+  #   | grep -q "PermitRootLogin.*without-password"
+  #   && (echo 'Configuration - success' && exit 0)
+  #   || (echo 'Configuraiton - not successful' && exit 1)
 
 after_failure:
   # Check what happened on systemd systems.
