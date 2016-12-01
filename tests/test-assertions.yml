@@ -11,13 +11,11 @@
       register: sshd_status
 
     - name: "[Test] Is the base configuration in place?"
-      find:
-        paths: "/etc/ssh/sshd_config"
-        contains: "PermitRootLogin.*without-password"
+      shell: grep "PermitRootLogin" /etc/ssh/sshd_config
       register: sshd_configuration
 
     - debug:
-        msg: "{{ sshd_configuration }}"
+        var: sshd_configuration
 
     - assert:
         that:
