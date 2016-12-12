@@ -1,7 +1,7 @@
 # SSHD
 
-[![Build Status](https://travis-ci.org/raznikk/ansible-ssh.svg?branch=master)](https://travis-ci.org/raznikk/ansible-ssh)
- 
+[![Build Status](https://travis-ci.org/ISU-Ansible/ansible-ssh.svg?branch=master)](https://travis-ci.org/ISU-Ansible/ansible-ssh)
+
 The sshd role allows you to manage your sshd configuration.  This role allows you to manage the /etc/ssh/ssh_config file as host or group variables. You can choose to use the default configuration settings, or replace the default variables with your own, preferred sshd_config file settings.
 
 If you choose, you can also manage Match blocks using additional variables.
