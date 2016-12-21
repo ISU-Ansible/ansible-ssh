@@ -4,14 +4,17 @@ sudo: required
 
 env:
   - distro: centos7
+    location: "centos:latest"
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume=/tmp:/tmp:rw --volume=/run:/run:rw"
     service_name: sshd.service
   - distro: centos6
+    location: "centos6"
     init: /sbin/init
     run_opts: ""
     service_name: sshd.service
   - distro: fedora
+    location: "fedora:latest"
     init: /usr/sbin/init
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     service_name: sshd.service
@@ -20,7 +23,7 @@ services:
   - docker
 
 before_install:
-  - 'docker pull ISU-Ansible/docker-${distro}-ansible'
+  - 'docker pull ${location}'
 
 script:
   - container_id=$(mktemp)
