@@ -1,16 +1,8 @@
 ---
-- name: restart sshd
+- name: Restart sshd
   tags:
     - service
     - sshd
   service:
     name: "{{ sshd_service_name }}"
     state: restarted
-
-- name: reload sshd
-  tags:
-    - service
-    - sshd
-  service:
-    name: "{{ sshd_service_name }}"
-    state: reloaded
