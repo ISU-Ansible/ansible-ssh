@@ -14,15 +14,3 @@
   service:
     name: "{{ sshd_service_name }}"
     state: reloaded
-
-- name: firewalld ssh
-  tags:
-    - services
-    - sshd
-  firewalld:
-    service: sshd
-    zone: "{{ opensshd_firewalld.zone }}"
-    state: "{{ opensshd_firewalld.state }}"
-    permanent: "{{ opensshd_firewalld.permanent | default('true') }}"
-    immediate: "{{ opensshd_firewalld.immediate | default('true') }}"
-  when: opensshd_firewalld.zone is defined and opensshd_firewalld.state is defined

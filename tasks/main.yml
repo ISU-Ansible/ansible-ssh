@@ -2,28 +2,26 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
-- block:
+- name: "[OpenSSH] Installation"
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_flattened:
+    - "{{ opensshd_packages }}"
+    - "{{ opensshd_packages_extras }}"
 
-  - package:
-      name: "{{ item }}"
-      state: installed
-    with_flattened:
-      - "{{ opensshd_packages }}"
-      - "{{ opensshd_packages_extras }}"
+- name: "[OpenSSH] Configuration"
+  template:
+    src: sshd_config.j2
+    dest: "{{ opensshd_config_path }}"
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - Restart sshd
 
-  - service:
-      name: "{{sshd_service_name}}"
-      state: started
-      enabled: yes
-
-  - template:
-      src: sshd_config.j2
-      dest: "{{ opensshd_config_path }}"
-      owner: root
-      group: root
-      mode: 0600
-    notify:
-      - restart sshd
-      - firewalld ssh
-
-  when: opensshd_enabled == true
+- name: "[OpenSSH] Service Initialization"
+  service:
+    name: "{{sshd_service_name}}"
+    state: started
+    enabled: yes
