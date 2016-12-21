@@ -20,7 +20,7 @@ services:
   - docker
 
 before_install:
-  - 'docker pull ISU-Ansible/docker-${distro}-ansible:latest'
+  - 'docker pull ISU-Ansible/docker-${distro}-ansible'
 
 script:
   - container_id=$(mktemp)
