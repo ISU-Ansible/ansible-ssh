@@ -11,7 +11,10 @@ env:
     init: /sbin/init
     run_opts: ""
     service_name: sshd.service
-
+  - distro: fedora24
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    service_name: sshd.service
 # Tell Travis to start Docker when it brings up an environment.
 services:
   - docker
