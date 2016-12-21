@@ -11,7 +11,7 @@ env:
     init: /sbin/init
     run_opts: ""
     service_name: sshd.service
-  - distro: fedora_latest
+  - distro: fedora
     init: /usr/sbin/init
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     service_name: sshd.service
