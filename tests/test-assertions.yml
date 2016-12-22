@@ -9,6 +9,12 @@
     - name: "[Test] Is SSHD running?"
       shell: service sshd status
       register: sshd_status
+      when: ansible_os_family != "Fedora"
+
+    - name: "[Test] Is SSHD running?"
+      shell: systemctl status sshd.service
+      register: sshd_status
+      when: ansible_os_family == "Fedora"
 
     - name: "[Test] Is the base configuration in place?"
       shell: grep "PermitRootLogin" /etc/ssh/sshd_config
