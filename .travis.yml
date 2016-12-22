@@ -71,12 +71,8 @@ script:
   #   || (echo 'Configuraiton - not successful' && exit 1)
 
   # Actually test whether or not an SSH connection works
-  - ssh_test=$(mktemp)
-  - sshpass -p test ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost "echo 'hi'" | tee -a ${ssh_test}
-  - cat ${ssh_test}
   - >
-    tail ${ssh_test}
-    | grep -q "hi"
+    sshpass -p test ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost "echo 'hi'"
     && (echo 'SSH test: pass' && exit 0)
     || (echo 'SSH test: fail' && exit 1)
 
