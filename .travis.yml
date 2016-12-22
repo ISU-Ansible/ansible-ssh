@@ -74,7 +74,8 @@ script:
   - ssh_test=$(mktemp)
   - sshpass -p test ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost "echo 'hi'" | tee -a ${ssh_test}
   - >
-    echo $?
+    tail ${ssh_test}
+    | grep -q "hi"
     && (echo 'SSH test: pass' && exit 0)
     || (echo 'SSH test: fail' && exit 1)
 
