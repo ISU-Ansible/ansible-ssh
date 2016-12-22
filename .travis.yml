@@ -24,6 +24,8 @@ before_install:
   - 'docker pull isuansible/docker-${distro}-ansible:latest'
 
 script:
+  - sudo apt-get install -y sshpass
+
   - container_id=$(mktemp)
   # Run container in detached state.
   - 'docker run --detach -p 22 --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} isuansible/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
@@ -70,12 +72,9 @@ script:
 
   # Actually test whether or not an SSH connection works
   - ssh_test=$(mktemp)
+  - sshpass -p test ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost "echo 'hi'" | tee -a ${ssh_test}
   - >
-    echo "test" |
-    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost "echo 'hi'" | tee -a ${ssh_test}
-  - >
-    tail ${ssh_test}
-    | grep 'hi'
+    echo $?
     && (echo 'SSH test: pass' && exit 0)
     || (echo 'SSH test: fail' && exit 1)
 
