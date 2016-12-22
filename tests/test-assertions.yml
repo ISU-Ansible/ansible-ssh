@@ -10,7 +10,7 @@
       user:
         name: "test"
         comment: "Test User"
-        password: "$6$5uEBGSA8qzcdnCuG$46D.sd.zdW4kM0Q2wnr0TQk0nY4.rvJ2fk9Oew4ZIt0XbJFpvGnRIR/SOiY1r.qGbqzYmwAery69t0Hh8JwHN0"
+        password: "$6$rounds=100000$rzhbrzSXcro6L6Oz$PLvveeBMqf9p4XsTjhmuJgTQssUi6DQA6mGVPN88VVX6ot7yd.NhytJRxKC03Nv0T4OW9pWvNfuz89i34LzE1/"
 
     - name: "[Test] Is SSHD running?"
       shell: service sshd status
