@@ -71,12 +71,12 @@ script:
   #   || (echo 'Configuraiton - not successful' && exit 1)
 
   # Actually test whether or not an SSH connection works
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm useradd --password "$6$fr/j/P.8$gudGkPvtlJVPnzdVIRXa7pjqSYvHOg5wGDM5/jGkgY1wQNehvx3qN/DGLNLz9sAj8RauNa2gPvFiISnPivWSq/" test'
+  #- 'docker exec --tty "$(cat ${container_id})" env TERM=xterm useradd --password "$6$fr/j/P.8$gudGkPvtlJVPnzdVIRXa7pjqSYvHOg5wGDM5/jGkgY1wQNehvx3qN/DGLNLz9sAj8RauNa2gPvFiISnPivWSq/" test'
 
-  - >
-    sshpass -p 'test' ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost date
-    && (echo 'SSH test: pass' && exit 0)
-    || (echo 'SSH test: fail' && exit 1)
+  #- >
+  #  sshpass -p 'test' ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost date
+  #  && (echo 'SSH test: pass' && exit 0)
+  #  || (echo 'SSH test: fail' && exit 1)
 
 after_failure:
   # Check what happened on systemd systems.
