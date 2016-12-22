@@ -71,7 +71,7 @@ script:
   #   || (echo 'Configuraiton - not successful' && exit 1)
 
   # Actually test whether or not an SSH connection works
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm useradd --password "$6$rounds=100000$rzhbrzSXcro6L6Oz$PLvveeBMqf9p4XsTjhmuJgTQssUi6DQA6mGVPN88VVX6ot7yd.NhytJRxKC03Nv0T4OW9pWvNfuz89i34LzE1/" test'
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm useradd --password "$6$fr/j/P.8$gudGkPvtlJVPnzdVIRXa7pjqSYvHOg5wGDM5/jGkgY1wQNehvx3qN/DGLNLz9sAj8RauNa2gPvFiISnPivWSq/" test'
 
   - >
     sshpass -p 'test' ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost date
