@@ -72,7 +72,7 @@ script:
   - ssh_test=$(mktemp)
   - >
     echo "test" |
-    ssh test@localhost "echo 'hi'" | tee -a ${ssh_test}
+    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no test@localhost "echo 'hi'" | tee -a ${ssh_test}
   - >
     tail ${ssh_test}
     | grep 'hi'
