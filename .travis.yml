@@ -26,7 +26,7 @@ before_install:
 script:
   - container_id=$(mktemp)
   # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} isuansible/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
+  - 'docker run --detach -p 22 --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} isuansible/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Test facts.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible -m setup localhost'
@@ -67,6 +67,17 @@ script:
   #   | grep -q "PermitRootLogin.*without-password"
   #   && (echo 'Configuration - success' && exit 0)
   #   || (echo 'Configuraiton - not successful' && exit 1)
+
+  # Actually test whether or not an SSH connection works
+  - ssh_test=$(mktemp)
+  - >
+    echo "test" |
+    ssh test@localhost "echo 'hi'" | tee -a ${ssh_test}
+  - >
+    tail ${ssh_test}
+    | grep 'hi'
+    && (echo 'SSH test: pass' && exit 0)
+    || (echo 'SSH test: fail' && exit 1)
 
 after_failure:
   # Check what happened on systemd systems.
