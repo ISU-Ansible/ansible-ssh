@@ -4,17 +4,14 @@ sudo: required
 
 env:
   - distro: centos7
-    location: "isuansible/docker-${distro}-ansible:latest"
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume=/tmp:/tmp:rw --volume=/run:/run:rw"
     service_name: sshd.service
   - distro: centos6
-    location: "isuansible/docker-${distro}-ansible:latest"
     init: /sbin/init
     run_opts: ""
     service_name: sshd.service
   - distro: fedora
-    location: "isuansible/docker-${distro}-ansible:latest"
     init: /usr/sbin/init
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     service_name: sshd.service
@@ -28,7 +25,7 @@ before_install:
 script:
   - container_id=$(mktemp)
   # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${location} "${init}" > "${container_id}"'
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} isuansible/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
