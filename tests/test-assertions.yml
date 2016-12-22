@@ -8,16 +8,13 @@
   tasks:
     - name: "[Test] Is SSHD running?"
       shell: service sshd status
-      register: sshd_status
-      when: "{{ansible_os_family != 'Fedora'}}"
+      register: sshd_el_status
+      when: ansible_os_family == 'RedHat'
 
     - name: "[Test] Is SSHD running?"
       shell: systemctl status sshd.service
-      register: sshd_status
-      when: "{{ansible_os_family == 'Fedora'}}"
-
-    - debug:
-        var: sshd_status
+      register: sshd_fedora_status
+      when: ansible_os_family == 'Fedora'
 
     - name: "[Test] Is the base configuration in place?"
       shell: grep "PermitRootLogin" /etc/ssh/sshd_config
@@ -28,5 +25,12 @@
 
     - assert:
         that:
-         - "sshd_status.stdout.find('running')"
+         - "sshd_el_status.stdout.find('running')"
          - "sshd_configuration.stdout.find('without-password')"
+      when: ansible_os_family == "RedHat"
+
+    - assert:
+        that:
+         - "sshd_fedora_status.stdout.find('running')"
+         - "sshd_configuration.stdout.find('without-password')"
+      when: ansible_os_family == "Fedora"
