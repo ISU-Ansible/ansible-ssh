@@ -1,6 +1,6 @@
 ---
-- name: reload_sshd
+- name: reload_opensshd
   service:
-    name: "{{ sshd_service }}"
+    name: "{{ opensshd_service }}"
     state: reloaded
   when: opensshd_allow_reload

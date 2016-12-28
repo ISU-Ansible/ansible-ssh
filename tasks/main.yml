@@ -10,13 +10,13 @@
     - "{{ ansible_os_family }}.yml"
     - default.yml
   tags:
-    - sshd
+    - opensshd
 
 - name: OPENSSH | Assert that OS is supported
   assert:
     that: opensshd_os_supported == True
   tags:
-    - sshd
+    - opensshd
 
 - name: OPENSSH | Install Packages
   package:
@@ -25,7 +25,7 @@
   with_items:
     - "{{ opensshd_packages }}"
   tags:
-    - sshd
+    - opensshd
 
 - name: OPENSSH | Configure run directory
   file:
@@ -34,20 +34,20 @@
     mode: 0755
   when: opensshd_manage_var_run
   tags:
-    - sshd
+    - opensshd
 
 - name: OPENSSH | Set sshd configuration
   template:
-    src: sshd_template.j2
+    src: opensshd_template.j2
     dest: "{{ opensshd_config_file }}"
     owner: "{{ opensshd_config_owner }}"
     group: "{{ opensshd_config_group }}"
     mode: "{{ opensshd_config_mode }}"
     validate: "{{ opensshd_binary }} -t -f %s"
   notify:
-    - Reload sshd
+    - Reload opensshd
   tags:
-    - sshd
+    - opensshd
 
 - name: OPENSSH | Configure service as enabled and running
   service:
@@ -56,10 +56,10 @@
     state: running
   when: opensshd_manage_service
   tags:
-    - sshd
+    - opensshd
 
 - name: OPENSSH | Register that this role has run
   set_fact: opensshd_has_run=true
-  when: sshd_has_run is not defined
+  when: opensshd_has_run is not defined
   tags:
-    - sshd
+    - opensshd
