@@ -6,7 +6,7 @@
 #
 opensshd_enabled: true
 opensshd_manage_service: true
-opensshd_allow_reload: "{{ sshd_manage_service }}"
+opensshd_allow_reload: "{{ opensshd_manage_service }}"
 opensshd_manage_var_run: "{{ false if ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7' else true }}"
 opensshd_skip_defaults: false
 
