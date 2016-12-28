@@ -6,38 +6,38 @@
 {%     for match in match_list %}
 Match {{ match["Condition"] }}
 
-{% if sshd['Match'] is defined %}
-{{ match_block(sshd['Match']) -}}
+{% if opensshd['Match'] is defined %}
+{{ match_block(opensshd['Match']) -}}
 {% endif %}
-{% if sshd_match is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_1 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_1 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_2 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_2 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_3 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_3 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_4 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_4 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_5 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_5 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_6 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_6 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_7 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_7 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_8 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_8 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
-{% if sshd_match_9 is defined %}
-{{ match_block(sshd_match) -}}
+{% if opensshd_match_9 is defined %}
+{{ match_block(opensshd_match) -}}
 {% endif %}
 {{       render_option("AllowAgentForwarding",match["AllowAgentForwarding"],true) -}}
 {{       render_option("AllowGroups",match["AllowGroups"],true) -}}

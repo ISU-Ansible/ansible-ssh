@@ -2,10 +2,10 @@
 {%   set value = undefined %}
 {%   if override is defined %}
 {%     set value = override %}
-{%   elif sshd[key] is defined %}
-{%     set value = sshd[key] %}
-{%   elif sshd_defaults[key] is defined and sshd_skip_defaults != true %}
-{%     set value = sshd_defaults[key] %}
+{%   elif opensshd[key] is defined %}
+{%     set value = opensshd[key] %}
+{%   elif opensshd_defaults[key] is defined and opensshd_skip_defaults != true %}
+{%     set value = opensshd_defaults[key] %}
 {%   endif %}
 {{ render_option(key,value) -}}
 {% endmacro %}
