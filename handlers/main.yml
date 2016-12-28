@@ -1,5 +1,5 @@
 ---
-- name: reload_opensshd
+- name: Reload opensshd
   service:
     name: "{{ opensshd_service }}"
     state: reloaded
