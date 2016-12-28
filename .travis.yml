@@ -87,7 +87,6 @@ notifications:
   email: false
   irc:
     channels:
-      - "chat.freenode.net#isubit"
       - "chat.freenode.net#isudevops"
     on_success: always
     on_failure: change
