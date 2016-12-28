@@ -16,4 +16,4 @@
 
     - assert:
         that:
-         - "sshd_configuration.stdout.find('# Ansible managed')"
+         - 'sshd_configuration.stdout_lines.find("# Ansible managed")'
