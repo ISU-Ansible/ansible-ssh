@@ -18,7 +18,7 @@
       when: ansible_distribution == 'Fedora'
 
     - name: "[Test] Is the base configuration in place?"
-      shell: grep "PermitRootLogin" /etc/ssh/sshd_config
+      shell: cat /etc/ssh/sshd_config
       register: sshd_configuration
 
     - debug:
