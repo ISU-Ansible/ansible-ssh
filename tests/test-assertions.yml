@@ -32,11 +32,11 @@
     - assert:
         that:
          - "sshd_el_status.stdout.find('running')"
-         - "sshd_configuration.stdout.find('without-password')"
+         - "sshd_configuration.stdout.find('Ansible Managed')"
       when: ansible_distribution == "CentOS"
 
     - assert:
         that:
          - "sshd_fedora_status.stdout.find('running')"
-         - "sshd_configuration.stdout.find('without-password')"
+         - "sshd_configuration.stdout.find('Ansible Managed')"
       when: ansible_distribution == "Fedora"
