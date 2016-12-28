@@ -1,0 +1,23 @@
+#!/bin/sh
+
+SECTION_DIR="./sections"
+MACRO_DIR="./macros"
+TEMPLATE_DIR="../../templates"
+TEMPLATE_NAME="sshd_template"
+
+# Create macros
+cat ${SECTION_DIR}/900-render_options > ${MACRO_DIR}/render_options.macro
+cat ${SECTION_DIR}/910-body_options > ${MACRO_DIR}/body_options.macro
+{
+  cat ${SECTION_DIR}/920-match_options;
+  cat options_match |awk '{print "{{       render_option(\""$1"\",match[\""$1"\"],true) -}}"}'
+  cat ${SECTION_DIR}/921-match_options_end;
+} > ${MACRO_DIR}/match_options.macro
+
+# Create the template
+{
+  cat ${SECTION_DIR}/000_header;
+  cat options_body | awk '{print "{{ body_option(\""$1"\",sshd_"$1") -}}"}';
+  cat ${MACRO_DIR}/*.macro
+  cat ${SECTION_DIR}/999-footer
+} > ${TEMPLATE_DIR}/${TEMPLATE_NAME}.j2

@@ -1,8 +1,6 @@
 ---
-- name: Restart sshd
-  tags:
-    - service
-    - sshd
+- name: reload_sshd
   service:
-    name: "{{ sshd_service_name }}"
-    state: restarted
+    name: "{{ sshd_service }}"
+    state: reloaded
+  when: opensshd_allow_reload

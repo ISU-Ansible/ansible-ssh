@@ -1,27 +1,65 @@
 ---
-- name: Include OS-specific variables.
-  include_vars: "{{ ansible_distribution }}.yml"
+- name: OPENSSH | Include OS-specific variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}_{{ ansible_distribution_minor_version}}.yml"
+    - "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}_{{ ansible_distribution_major_version }}_{{ ansible_distribution_minor_version}}.yml"
+    - "{{ ansible_os_family }}_{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    - default.yml
+  tags:
+    - sshd
 
-- name: "[OpenSSH] Installation"
+- name: OPENSSH | Assert that OS is supported
+  assert:
+    that: opensshd_os_supported == True
+  tags:
+    - sshd
+
+- name: OPENSSH | Install Packages
   package:
     name: "{{ item }}"
     state: installed
-  with_flattened:
+  with_items:
     - "{{ opensshd_packages }}"
-    - "{{ opensshd_packages_extras }}"
+  tags:
+    - sshd
 
-- name: "[OpenSSH] Configuration"
+- name: OPENSSH | Configure run directory
+  file:
+    path: /var/run/sshd
+    state: directory
+    mode: 0755
+  when: opensshd_manage_var_run
+  tags:
+    - sshd
+
+- name: OPENSSH | Set sshd configuration
   template:
-    src: sshd_config.j2
-    dest: "{{ opensshd_config_path }}"
-    owner: root
-    group: root
-    mode: 0600
+    src: sshd_template.j2
+    dest: "{{ opensshd_config_file }}"
+    owner: "{{ opensshd_config_owner }}"
+    group: "{{ opensshd_config_group }}"
+    mode: "{{ opensshd_config_mode }}"
+    validate: "{{ opensshd_binary }} -t -f %s"
   notify:
-    - Restart sshd
+    - Reload sshd
+  tags:
+    - sshd
 
-- name: "[OpenSSH] Service Initialization"
+- name: OPENSSH | Configure service as enabled and running
   service:
-    name: "{{sshd_service_name}}"
-    state: started
-    enabled: yes
+    name: "{{ opensshd_service }}"
+    enabled: true
+    state: running
+  when: opensshd_manage_service
+  tags:
+    - sshd
+
+- name: OPENSSH | Register that this role has run
+  set_fact: opensshd_has_run=true
+  when: sshd_has_run is not defined
+  tags:
+    - sshd

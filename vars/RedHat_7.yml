@@ -13,7 +13,7 @@ opensshd_defaults:
   PasswordAuthentication: yes
   ChallengeResponseAuthentication: no
   GSSAPIAuthentication: yes
-  GSSAPICleanupCredentials: no
+  GSSAPICleanupCredentials: yes
   UsePAM: yes
   X11Forwarding: yes
   UsePrivilegeSeparation: sandbox

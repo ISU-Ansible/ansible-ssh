@@ -2,50 +2,23 @@
 #
 # This variable enables openssh. By default, we set it to true. If you're
 # running this role, you probably want it installed. If not, then you can
-# set it to false
+# override this variable
 #
 opensshd_enabled: true
+opensshd_manage_service: "{{ false if ansible_virtualization_type == 'docker' else true }}"
+opensshd_allow_reload: "{{ sshd_manage_service }}"
+opensshd_manage_var_run: "{{ false if ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7' else true }}"
 
-#
-# Packages to install. Users can place any extra packages they want
-# installed into opensshd_packages_extras
-#
-#opensshd_packages:
-#  - openssh-server
-opensshd_packages_extras: []
-
-#
-# Configuration file for sshd
-#
-opensshd_config_path: /etc/ssh/sshd_config
-
-#
-# Server settings for sshd
-#
-opensshd_server_settings:
-  Port: "22"
-  Protocol: "2"
-  SyslogFacility: "AUTHPRIV"
-  LogLevel: "INFO"
-  PermitRootLogin: "without-password"
-  PubkeyAuthentication: "yes"
-  PermitEmptyPasswords: "no"
-  AuthorizedKeysFile: ".ssh/authorized_keys"
-  ChallengeResponseAuthentication: "yes"
-  UsePAM: "yes"
-  AcceptEnv: "LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS"
-  X11Forwarding: "yes"
-  Subsystem: "sftp    /usr/libexec/openssh/sftp-server"
-
-# opensshd_server_denyusers:
-#    - user1
-#    - user2
-# opensshd_server_allowusers:
-#    - user3
-#    - user4
-# opensshd_server_denygroups:
-#    - group1
-#    - group2
-# opensshd_server_allowgroups:
-#    - group3
-#    - group4
+### VARS DEFAULTS
+### The following are defaults for OS specific configuration in var files in
+### this role. They should not be set by role users.
+opensshd_packages: []
+opensshd_config_owner: root
+opensshd_config_group: root
+opensshd_config_mode: "0600"
+opensshd_config_file: /etc/ssh/sshd_config
+opensshd_binary: /usr/sbin/sshd
+opensshd_service: sshd
+opensshd_sftp_server: /usr/lib/openssh/sftp-server
+opensshd_defaults: {}
+opensshd_os_supported: no
