@@ -1,8 +1,8 @@
 # {{ ansible_managed }}
 
-{%- import body_options.macro %}
-{%- import match_options.macro %}
-{%- import render_options.macro %}
+{% from 'body_options.macro' import body_option %}
+{% from 'match_options.macro' import match_option %}
+{% from 'render_options.macro' import render_option %}
 
 #
 # Main SSH Options
