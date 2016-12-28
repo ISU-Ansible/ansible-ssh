@@ -11,6 +11,9 @@
       shell: cat /etc/ssh/sshd_config
       register: sshd_configuration
 
+    - debug:
+        var: sshd_configuration
+
     - assert:
         that:
          - "sshd_configuration.stdout.find('# Ansible managed')"
