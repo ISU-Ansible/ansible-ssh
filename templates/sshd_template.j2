@@ -1,9 +1,4 @@
 # {{ ansible_managed }}
-
-{% from 'body_options.macro' import body_option with context %}
-{% from 'match_options.macro' import match_option with context %}
-{% from 'render_options.macro' import render_option with context %}
-
 #
 # Main SSH Options
 #
@@ -134,3 +129,114 @@
 {% if opensshd_match_9 is defined %}
 {{ match_block(opensshd_match) -}}
 {% endif %}
+
+
+{#- Body Options Jinja Template #}
+{% macro body_option(key,override) %}
+{%   set value = undefined %}
+{%   if override is defined %}
+{%     set value = override %}
+{%   elif opensshd[key] is defined %}
+{%     set value = opensshd[key] %}
+{%   elif opensshd_defaults[key] is defined and opensshd_skip_defaults != true %}
+{%     set value = opensshd_defaults[key] %}
+{%   endif %}
+{{ render_option(key,value) -}}
+{% endmacro %}
+
+{#- Match Options Jinja Template #}
+{% macro match_block(match_list) %}
+{%   if match_list["Condition"] is defined %}
+{%     set match_list = [ match_list ]%}
+{%   endif %}
+{%   if match_list is iterable %}
+{%     for match in match_list %}
+Match {{ match["Condition"] }}
+
+{% if opensshd['Match'] is defined %}
+{{ match_block(opensshd['Match']) -}}
+{% endif %}
+{% if opensshd_match is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_1 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_2 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_3 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_4 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_5 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_6 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_7 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_8 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{% if opensshd_match_9 is defined %}
+{{ match_block(opensshd_match) -}}
+{% endif %}
+{{       render_option("AllowAgentForwarding",match["AllowAgentForwarding"],true) -}}
+{{       render_option("AllowGroups",match["AllowGroups"],true) -}}
+{{       render_option("AllowTcpForwarding",match["AllowTcpForwarding"],true) -}}
+{{       render_option("AllowUsers",match["AllowUsers"],true) -}}
+{{       render_option("AuthenticationMethods",match["AuthenticationMethods"],true) -}}
+{{       render_option("AuthorizedKeysCommand",match["AuthorizedKeysCommand"],true) -}}
+{{       render_option("AuthorizedKeysCommandUser",match["AuthorizedKeysCommandUser"],true) -}}
+{{       render_option("AuthorizedKeysFile",match["AuthorizedKeysFile"],true) -}}
+{{       render_option("AuthorizedPrincipalsFile",match["AuthorizedPrincipalsFile"],true) -}}
+{{       render_option("Banner",match["Banner"],true) -}}
+{{       render_option("ChrootDirectory",match["ChrootDirectory"],true) -}}
+{{       render_option("DenyGroups",match["DenyGroups"],true) -}}
+{{       render_option("DenyUsers",match["DenyUsers"],true) -}}
+{{       render_option("ForceCommand",match["ForceCommand"],true) -}}
+{{       render_option("GatewayPorts",match["GatewayPorts"],true) -}}
+{{       render_option("GSSAPIAuthentication",match["GSSAPIAuthentication"],true) -}}
+{{       render_option("HostbasedAuthentication",match["HostbasedAuthentication"],true) -}}
+{{       render_option("HostbasedUsesNameFromPacketOnly",match["HostbasedUsesNameFromPacketOnly"],true) -}}
+{{       render_option("KbdInteractiveAuthentication",match["KbdInteractiveAuthentication"],true) -}}
+{{       render_option("KerberosAuthentication",match["KerberosAuthentication"],true) -}}
+{{       render_option("MaxAuthTries",match["MaxAuthTries"],true) -}}
+{{       render_option("MaxSessions",match["MaxSessions"],true) -}}
+{{       render_option("PasswordAuthentication",match["PasswordAuthentication"],true) -}}
+{{       render_option("PermitEmptyPasswords",match["PermitEmptyPasswords"],true) -}}
+{{       render_option("PermitOpen",match["PermitOpen"],true) -}}
+{{       render_option("PermitRootLogin",match["PermitRootLogin"],true) -}}
+{{       render_option("PermitTunnel",match["PermitTunnel"],true) -}}
+{{       render_option("PubkeyAuthentication",match["PubkeyAuthentication"],true) -}}
+{{       render_option("RhostsRSAAuthentication",match["RhostsRSAAuthentication"],true) -}}
+{{       render_option("RSAAuthentication",match["RSAAuthentication"],true) -}}
+{{       render_option("X11DisplayOffset",match["X11DisplayOffset"],true) -}}
+{{       render_option("X11Forwarding",match["X11Forwarding"],true) -}}
+{{       render_option("X11UseLocalHost",match["X11UseLocalHost"],true) -}}
+{%     endfor %}
+{%   endif %}
+{% endmacro %}
+
+{#- Render Options Jinja Template #}
+{% macro render_option(key,value,indent=false) %}
+{%   if value is defined %}
+{%     if indent == true %}  {% endif %}
+{%     if value is sameas true %}
+{{ key }} yes
+{%     elif value is sameas false %}
+{{ key }} no
+{%     elif value is string or value is number %}
+{{ key }} {{ value }}
+{%     else %}
+{%       for i in value %}
+{{ key }} {{ i }}
+{%       endfor %}
+{%     endif %}
+{%   endif %}
+{% endmacro %}
