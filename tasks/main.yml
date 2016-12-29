@@ -1,13 +1,13 @@
 ---
 - name: OPENSSH | Include OS-specific variables.
-  include_vars: "{{ item }}"
+  include_vars: "{{item}}"
   with_first_found:
-    - "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}_{{ ansible_distribution_minor_version}}.yml"
-    - "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}_{{ ansible_distribution_major_version }}_{{ ansible_distribution_minor_version}}.yml"
-    - "{{ ansible_os_family }}_{{ ansible_distribution_major_version }}.yml"
-    - "{{ ansible_os_family }}.yml"
+    - "{{ansible_distribution}}_{{ansible_distribution_major_version}}_{{ansible_distribution_minor_version}}.yml"
+    - "{{ansible_distribution}}_{{ansible_distribution_major_version}}.yml"
+    - "{{ansible_distribution}}.yml"
+    - "{{ansible_os_family}}_{{ansible_distribution_major_version}}_{{ansible_distribution_minor_version}}.yml"
+    - "{{ansible_os_family}}_{{ansible_distribution_major_version}}.yml"
+    - "{{ansible_os_family}}.yml"
     - default.yml
   tags:
     - opensshd
@@ -20,10 +20,9 @@
 
 - name: OPENSSH | Install Packages
   package:
-    name: "{{ item }}"
+    name: "{{item}}"
     state: installed
-  with_items:
-    - "{{ opensshd_packages }}"
+  with_items: "{{opensshd_packages}}"
   tags:
     - opensshd
 
@@ -39,11 +38,11 @@
 - name: OPENSSH | Set sshd configuration
   template:
     src: opensshd_template.j2
-    dest: "{{ opensshd_config_file }}"
-    owner: "{{ opensshd_config_owner }}"
-    group: "{{ opensshd_config_group }}"
-    mode: "{{ opensshd_config_mode }}"
-    validate: "{{ opensshd_binary }} -t -f %s"
+    dest: "{{opensshd_config_file}}"
+    owner: "{{opensshd_config_owner}}"
+    group: "{{opensshd_config_group}}"
+    mode: "{{opensshd_config_mode}}"
+    validate: "{{opensshd_binary}} -t -f %s"
   notify:
     - Reload opensshd
   tags:
@@ -51,7 +50,7 @@
 
 - name: OPENSSH | Configure service as enabled and running
   service:
-    name: "{{ opensshd_service }}"
+    name: "{{opensshd_service}}"
     enabled: true
     state: running
   when: opensshd_manage_service

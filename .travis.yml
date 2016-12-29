@@ -30,8 +30,11 @@ script:
   # Run container in detached state.
   - 'docker run --detach -p 22 --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} isuansible/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
-#  # Test facts.
-#  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible -m setup localhost'
+  # Apparently, we need to run apt-get update for Ubuntu before we test our role
+  - '[ ${distro} = "ubuntu1604" ] && docker exec --tty "$(cat ${container_id})" env TERM=xterm apt-get update'
+
+  # Test facts.
+  #- 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible -m setup localhost'
 
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
