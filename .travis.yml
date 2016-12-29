@@ -31,7 +31,7 @@ script:
   - 'docker run --detach -p 22 --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} isuansible/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Apparently, we need to run apt-get update for Ubuntu before we test our role
-  - '[ ${distro} = "ubuntu1604" ] && docker exec --tty "$(cat ${container_id})" env TERM=xterm apt-get update'
+  - 'if [ ${distro} = "ubuntu1604" ]; then docker exec --tty "$(cat ${container_id})" env TERM=xterm apt-get update; fi'
 
   # Test facts.
   #- 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible -m setup localhost'
