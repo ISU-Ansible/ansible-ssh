@@ -7,7 +7,7 @@
 opensshd_enabled: true
 opensshd_manage_service: {} 
 opensshd_allow_reload: {} 
-oensshd_manage_var_run: true
+opensshd_manage_var_run: true
 opensshd_skip_defaults: false
 
 #
