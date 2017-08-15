@@ -23,4 +23,6 @@ opensshd_defaults:
     - LC_IDENTIFICATION LC_ALL LANGUAGE
     - XMODIFIERS
   Subsystem: "sftp {{ opensshd_sftp_server }}"
+
+opensshd_manage_var_run: false
 opensshd_os_supported: yes
