@@ -5,15 +5,9 @@
 # override this variable
 #
 opensshd_enabled: true
-{% if ansible_virtualization_type == 'docker' %}
-opensshd_manage_service: true
-opensshd_allow_reload: true
-{% else %}
-opensshd_manage_service: false
-opensshd_allow_reload: false
-{% endif %}
-
-opensshd_manage_var_run: true
+opensshd_manage_service: {}
+opensshd_allow_reload: {}
+oensshd_manage_var_run: true
 opensshd_skip_defaults: false
 
 #

@@ -12,6 +12,11 @@
   tags:
     - opensshd
 
+- name: OPENSSH | Set facts for opensshd_manage_service and opensshd_allow_reload
+  set_fact:
+    opensshd_manage_service: "{{ false if ansible_virtualization_type == 'docker' else true }}"
+    opensshd_allow_reload: "{{ false if ansible_virtualization_type == 'docker' else true }}"
+
 - name: OPENSSH | Assert that OS is supported
   assert:
     that: opensshd_os_supported == true
