@@ -1,5 +1,12 @@
 ---
 - hosts: localhost
   remote_user: root
+  tasks:
+    - name: Ensure SSHD started
+      service:
+        name: "{{ opensshd_service }}"
+        enabled: true
+        state: running
+  
   roles:
     - role_under_test
