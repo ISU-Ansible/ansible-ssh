@@ -4,3 +4,9 @@
     name: "{{ opensshd_service }}"
     state: reloaded
   when: opensshd_allow_reload
+
+- name: Restart opensshd
+  service:
+    name: "{{ opensshd_service }}"
+    state: restarted
+  when: opensshd_allow_reload

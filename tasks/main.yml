@@ -56,7 +56,7 @@
     owner: "{{ opensshd_config_owner }}"
     group: "{{ opensshd_config_group }}"
     mode: "{{ opensshd_config_mode }}"
-    validate: "{{ opensshd_binary }} -t -f %s"
+#    validate: "{{ opensshd_binary }} -t -f %s"
   notify:
     - Reload opensshd
   tags:
