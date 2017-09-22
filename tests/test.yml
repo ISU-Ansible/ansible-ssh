@@ -2,5 +2,13 @@
 - hosts: localhost
   remote_user: root
 
+  pre_tasks:
+    - name: PRETASK | Generate keys
+      command: "/usr/bin/ssh-keygen -t {{ item.type }} -b 4096 -f {{ item.file }}"
+      with_items:
+        - { type: "rsa", file: "/etc/ssh/ssh_host_rsa_key" }
+        - { type: "ecdsa", file: "/etc/ssh/ssh_host_ecdsa_key" }
+        - { type: "ed25519", file: "/etc/ssh/ssh_host_ed25519_key" }
+
   roles:
     - role_under_test
