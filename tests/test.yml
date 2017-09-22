@@ -1,7 +1,8 @@
 ---
 - hosts: localhost
   remote_user: root
-  tasks:
+
+  pre_tasks:
     - name: Ensure SSHD started
       service:
         name: "{{ opensshd_service }}"
