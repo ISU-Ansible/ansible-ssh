@@ -31,15 +31,6 @@
   tags:
     - opensshd
 
-- name: OPENSSH | Configure service as enabled and running
-  service:
-    name: "{{ opensshd_service }}"
-    enabled: true
-    state: running
-  when: opensshd_manage_service
-  tags:
-    - opensshd
-
 - name: OPENSSH | Configure run directory
   file:
     path: /var/run/sshd
@@ -59,6 +50,15 @@
     validate: "{{ opensshd_binary }} -t -f %s"
   notify:
     - Reload opensshd
+  tags:
+    - opensshd
+
+- name: OPENSSH | Configure service as enabled and running
+  service:
+    name: "{{ opensshd_service }}"
+    enabled: true
+    state: running
+  when: opensshd_manage_service
   tags:
     - opensshd
 
