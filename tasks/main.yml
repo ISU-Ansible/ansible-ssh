@@ -44,7 +44,7 @@
   service:
     name: "{{ opensshd_service }}"
     enabled: true
-    state: running
+    state: started
   when: opensshd_manage_service
   tags:
     - opensshd
