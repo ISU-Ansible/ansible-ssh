@@ -1,8 +1,12 @@
 ---
+opensshd_os_supported: yes
+
 opensshd_packages:
   - openssh
   - openssh-server
+
 opensshd_sftp_server: /usr/libexec/openssh/sftp-server
+
 opensshd_defaults:
   HostKey:
     - /etc/ssh/ssh_host_rsa_key
@@ -23,4 +27,3 @@ opensshd_defaults:
     - LC_IDENTIFICATION LC_ALL LANGUAGE
     - XMODIFIERS
   Subsystem: "sftp {{ opensshd_sftp_server }}"
-opensshd_os_supported: yes

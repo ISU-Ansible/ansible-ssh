@@ -1,9 +1,14 @@
 ---
+opensshd_os_supported: yes
+
 opensshd_service: ssh
+
 opensshd_packages:
   - openssh-server
   - openssh-sftp-server
+
 opensshd_config_mode: "0644"
+
 opensshd_defaults:
   Port: 22
   Protocol: 2
@@ -37,4 +42,3 @@ opensshd_defaults:
   Subsystem: "sftp {{ opensshd_sftp_server }}"
   UsePAM: yes
   UseDNS: no
-opensshd_os_supported: yes

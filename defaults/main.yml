@@ -1,12 +1,12 @@
 ---
 #
-# This variable enables openssh. By default, we set it to true. If you're
-# running this role, you probably want it installed. If not, then you can
-# override this variable
+# These variables are for openssh. By default, we set it to true. 
+# If you're running this role, you probably want it installed. If 
+# not, then you can override this variable.
 #
 opensshd_enabled: true
-opensshd_manage_service: {} 
-opensshd_allow_reload: {} 
+opensshd_manage_service: {}
+opensshd_allow_reload: {}
 opensshd_manage_var_run: true
 opensshd_skip_defaults: false
 
@@ -15,9 +15,10 @@ opensshd_skip_defaults: false
 #
 opensshd: {}
 
-### VARS DEFAULTS
-### The following are defaults for OS specific configuration in var files in
-### this role. They should not be set by role users.
+#
+# These variables are set to the default values for each operating
+# system. 
+#
 opensshd_packages: []
 opensshd_config_owner: root
 opensshd_config_group: root

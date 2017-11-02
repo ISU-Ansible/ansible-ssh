@@ -1,8 +1,13 @@
 ---
+opensshd_manage_var_run: false
+opensshd_os_supported: yes
+
 opensshd_packages:
   - openssh
   - openssh-server
+
 opensshd_sftp_server: /usr/libexec/openssh/sftp-server
+
 opensshd_defaults:
   SyslogFacility: AUTHPRIV
   AuthorizedKeysFile: .ssh/authorized_keys
@@ -19,6 +24,3 @@ opensshd_defaults:
     - LC_IDENTIFICATION LC_ALL LANGUAGE
     - XMODIFIERS
   Subsystem: "sftp {{ opensshd_sftp_server }}"
-
-opensshd_manage_var_run: false
-opensshd_os_supported: yes
