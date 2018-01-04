@@ -3,7 +3,11 @@ galaxy_info:
   author: Barry Britt <bbritt@iastate.edu> and John Dickerson <jedicker@iastate.edu>
   description: A highly configurable role for installing and configuring SSH.
   company: Iowa State University
-  license: GPL
+
+  issue_tracker_url: https://github.com/ISU-Ansible/ansible-ssh/issues/
+
+  license: GPLv2
+
   min_ansible_version: 2.0
 
   platforms:
