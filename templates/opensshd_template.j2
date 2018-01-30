@@ -102,7 +102,9 @@ Match {{ match["Condition"] }}
 {%     elif value is string or value is number %}
 {{ key }} {{ value }}
 {%     else %}
-{{ key }} {{ value | join(" ") }}
+{%       for v in value %}
+{{ key }} {{ v }}
+{%       endfor %}
 {%     endif %}
 {%   endif %}
 {%- endmacro %}
