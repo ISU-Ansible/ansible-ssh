@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Barry Britt <bbritt@iastate.edu> and John Dickerson <jedicker@iastate.edu>
+  author: las-iris@iastate.edu
   description: A highly configurable role for installing and configuring SSH.
   company: Iowa State University
 
@@ -15,6 +15,8 @@ galaxy_info:
       versions:
       - 6
       - 7
+      - 8
+      - 9
 
   galaxy_tags:
     - ssh
